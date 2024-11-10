@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Medical Record Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Record for {{ medical_record.patient }}</h5>
+            <p><strong>Record Date:</strong> {{ medical_record.record_date }}</p>
+            <p><strong>Details:</strong> {{ medical_record.details }}</p>
+            <a href="{% url 'medical_record_edit' medical_record.id %}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+            <a href="{% url 'medical_record_delete' medical_record.id %}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+            <a href="{% url 'medical_record_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

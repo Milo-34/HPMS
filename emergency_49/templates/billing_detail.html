@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Billing Record Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Bill for {{ object.patient }}</h5>
+            <p><strong>Amount Due:</strong> {{ object.amount_due }}</p>
+            <p><strong>Due Date:</strong> {{ object.due_date }}</p>
+            <p><strong>Status:</strong> {{ object.is_paid|yesno:"Paid,Unpaid" }}</p>
+            <a href="{% url 'billing_edit' object.id %}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+            <a href="{% url 'billing_delete' object.id %}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+            <a href="{% url 'billing_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">{% if appointment %}Edit{% else %}Add{% endif %} Appointment</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> {% if appointment %}Update{% else %}Create{% endif %}</button>
+        <a href="{% url 'appointment_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Medical Records</h1>
+    <a href="{% url 'medical_record_add' %}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Add Medical Record</a>
+
+    <div class="mb-3">
+        <form method="GET" class="form-inline d-flex justify-content-between">
+            <div class="form-group mr-2">
+                <label for="sort" class="mr-2">Sort by:</label>
+                <select name="sort" id="sort" class="form-control mr-2">
+                    <option value="id" {% if request.GET.sort == "id" %}selected{% endif %}>ID</option>
+                    <option value="patient" {% if request.GET.sort == "patient" %}selected{% endif %}>Patient</option>
+                    <option value="record_date" {% if request.GET.sort == "record_date" %}selected{% endif %}>Record Date</option>
+                    <option value="details" {% if request.GET.sort == "details" %}selected{% endif %}>Details</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">Sort</button>
+            </div>
+
+            <div class="form-group ml-auto">
+                <input type="text" name="search" value="{{ request.GET.search }}" class="form-control mr-2" placeholder="Search Medical Records">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Record Date</th>
+                <th>Details</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in medical_records %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.patient }}</td>
+                <td>{{ record.record_date }}</td>
+                <td>{{ record.details|truncatewords:10 }}</td>
+                <td>
+                    <a href="{% url 'medical_record_detail' record.id %}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> View</a>
+                    <a href="{% url 'medical_record_edit' record.id %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="{% url 'medical_record_delete' record.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No medical records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

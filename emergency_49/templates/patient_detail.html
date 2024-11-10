@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Patient Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ patient.first_name }} {{ patient.last_name }}</h5>
+            <p class="card-text"><strong>Date of Birth:</strong> {{ patient.date_of_birth }}</p>
+            <p class="card-text"><strong>Phone Number:</strong> {{ patient.phone_number }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ patient.email }}</p>
+            <p class="card-text"><strong>Address:</strong> {{ patient.address }}</p>
+            <p class="card-text"><strong>Medical History:</strong> {{ patient.medical_history|default:"No medical history available." }}</p>
+            <a href="{% url 'patient_edit' patient.id %}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+            <a href="{% url 'patient_delete' patient.id %}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+            <a href="{% url 'patient_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

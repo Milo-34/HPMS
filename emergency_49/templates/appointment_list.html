@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointments List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Appointments</h1>
+    <a href="{% url 'appointment_add' %}" class="btn btn-primary mb-3">
+        <i class="fas fa-plus"></i> Add Appointment
+    </a>
+
+    <div class="mb-3">
+        <form method="GET" class="form-inline d-flex justify-content-between">
+            <div class="form-group mr-2">
+                <label for="sort" class="mr-2">Sort by:</label>
+                <select name="sort" id="sort" class="form-control mr-2">
+                    <option value="patient" {% if request.GET.sort == "patient" %}selected{% endif %}>Patient</option>
+                    <option value="doctor" {% if request.GET.sort == "doctor" %}selected{% endif %}>Doctor</option>
+                    <option value="appointment_date" {% if request.GET.sort == "appointment_date" %}selected{% endif %}>Appointment Date</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">Sort</button>
+            </div>
+
+            <div class="form-group ml-auto">
+                <input type="text" name="search" value="{{ request.GET.search }}" class="form-control mr-2" placeholder="Search Appointments">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Appointment Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in object_list %}
+                <tr>
+                    <td>{{ appointment.patient }}</td>
+                    <td>{{ appointment.doctor }}</td>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>
+                        <a href="{% url 'appointment_detail' appointment.pk %}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> View</a>
+                        <a href="{% url 'appointment_edit' appointment.pk %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                        <a href="{% url 'appointment_delete' appointment.pk %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No appointments available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
